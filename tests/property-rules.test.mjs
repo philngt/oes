@@ -27,6 +27,8 @@ for(const relation of [false,true]){
     ['array rule',[],'invalid-property-rule'],
     ['nonboolean required',{type:'string',required:'false'},'invalid-required'],
     ['prototype type',{type:'toString'},'unknown-property-type'],
+    ['array type',{type:['string']},'unknown-property-type'],
+    ['object type without coercion',{type:{toString:null}},'unknown-property-type'],
   ]){
     test(`${target} ${label} returns diagnostics before graph evaluation`,()=>{
       const {schema,graph}=fixture(rule,relation);

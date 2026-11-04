@@ -23,7 +23,7 @@ key order. No new ontology vocabulary or inference rule was introduced.
 
 | Command | Observed result |
 |---|---|
-| `npm test` | 86 passed, 0 failed, 0 skipped; includes 24 property-rule regressions |
+| `npm test` | 90 passed, 0 failed, 0 skipped; includes 28 property-rule regressions |
 | `npm run validate` | Passed; 16 evidence records checked, 0 skipped |
 | `node bin/oes.mjs check-all --require-hash --warnings-as-errors --json` | `passed: true`, `diagnostics: []`, 16 checked, 0 skipped |
 | `npm run demo` | Passed; synthetic records with actual local Git history, 22 nodes, 11 edges, 9 evidence records checked |
