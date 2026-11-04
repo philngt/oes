@@ -1,0 +1,105 @@
+{
+  "apiVersion": "oes.graph/v1",
+  "template": "software-system",
+  "metadata": {
+    "id": "software-kafka",
+    "ontologyVersion": "0.1.0",
+    "synthetic": true
+  },
+  "nodes": [
+    {
+      "id": "source",
+      "type": "Source",
+      "properties": {
+        "uri": "examples/sources/kafka-code.md",
+        "kind": "markdown"
+      }
+    },
+    {
+      "id": "evidence",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L2-L6",
+        "excerpt": "service: OrderService; event: OrderCreated; topic: orders.created"
+      }
+    },
+    {
+      "id": "service",
+      "type": "Service",
+      "properties": {
+        "label": "OrderService"
+      }
+    },
+    {
+      "id": "event",
+      "type": "EventType",
+      "properties": {
+        "label": "OrderCreated"
+      }
+    },
+    {
+      "id": "topic",
+      "type": "BrokerTopic",
+      "properties": {
+        "label": "orders.created"
+      }
+    },
+    {
+      "id": "commit",
+      "type": "Commit",
+      "properties": {
+        "sha": "abc123"
+      }
+    },
+    {
+      "id": "config",
+      "type": "ConfigKey",
+      "properties": {
+        "key": "delivery.timeout.ms"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c1",
+      "type": "publishes",
+      "from": "service",
+      "to": "event",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "c2",
+      "type": "carriedBy",
+      "from": "event",
+      "to": "topic",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "c3",
+      "type": "changesConfig",
+      "from": "commit",
+      "to": "config",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "c4",
+      "type": "configures",
+      "from": "config",
+      "to": "service",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    }
+  ]
+}

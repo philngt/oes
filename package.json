@@ -1,0 +1,17 @@
+{
+  "name": "@philngt/ontology-engineering-skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reusable ontology engineering skills, composable templates and evidence-aware graph validation",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "oes": "./bin/oes.mjs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "validate": "node bin/oes.mjs check-all"
+  }
+}

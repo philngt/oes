@@ -1,0 +1,63 @@
+{
+  "apiVersion": "oes/v1",
+  "kind": "OntologyTemplate",
+  "metadata": {
+    "id": "cross-domain",
+    "version": "0.1.0",
+    "description": "Composable traceability from decisions to tickets, commits, services and workflow steps"
+  },
+  "extends": [
+    "knowledge-evidence",
+    "software-system",
+    "workflow-process"
+  ],
+  "entityTypes": {},
+  "relationTypes": {
+    "implementsTicket": {
+      "from": [
+        "Commit"
+      ],
+      "to": [
+        "Ticket"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "decidedIn": {
+      "from": [
+        "Commit"
+      ],
+      "to": [
+        "Decision"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "changesService": {
+      "from": [
+        "Commit"
+      ],
+      "to": [
+        "Service"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "fulfillsStep": {
+      "from": [
+        "Commit"
+      ],
+      "to": [
+        "Step"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "motivatesRule": {
+      "from": [
+        "Decision"
+      ],
+      "to": [
+        "BusinessRule"
+      ],
+      "cardinality": "many-to-many"
+    }
+  },
+  "constraints": []
+}

@@ -1,0 +1,136 @@
+{
+  "apiVersion": "oes/v1",
+  "kind": "OntologyTemplate",
+  "metadata": {
+    "id": "people-relationship",
+    "version": "0.1.0",
+    "description": "Typed personal relationships, inverse semantics, group membership and life events inspired by Monica"
+  },
+  "extends": [
+    "core"
+  ],
+  "entityTypes": {
+    "Person": {
+      "description": "Contact or real-world person",
+      "parent": "Entity",
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Group": {
+      "description": "Relationship context, such as a family or team",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Organization": {
+      "description": "Organization or employer",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "RelationshipKind": {
+      "description": "Vocabulary term for a relationship",
+      "parent": "Entity",
+      "properties": {
+        "forwardLabel": {
+          "type": "string",
+          "required": true
+        },
+        "inverseLabel": {
+          "type": "string"
+        }
+      }
+    },
+    "LifeEvent": {
+      "description": "Event involving people",
+      "parent": "Event",
+      "properties": {}
+    }
+  },
+  "relationTypes": {
+    "parentOf": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "Person"
+      ],
+      "cardinality": "many-to-many",
+      "inverse": "childOf"
+    },
+    "childOf": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "Person"
+      ],
+      "cardinality": "many-to-many",
+      "inverse": "parentOf"
+    },
+    "friendOf": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "Person"
+      ],
+      "cardinality": "many-to-many",
+      "symmetric": true
+    },
+    "knows": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "Person"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "memberOf": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "Group"
+      ],
+      "cardinality": "many-to-many",
+      "properties": {
+        "role": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "partOfOrganization": {
+      "from": [
+        "Group"
+      ],
+      "to": [
+        "Organization"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "worksAt": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "Organization"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "participatedInLifeEvent": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "LifeEvent"
+      ],
+      "cardinality": "many-to-many"
+    }
+  },
+  "constraints": []
+}

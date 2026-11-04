@@ -1,0 +1,239 @@
+{
+  "apiVersion": "oes/v1",
+  "kind": "OntologyTemplate",
+  "metadata": {
+    "id": "software-system",
+    "version": "0.1.0",
+    "description": "Source-grounded software systems, services, events, APIs and deployment architecture"
+  },
+  "extends": [
+    "core"
+  ],
+  "entityTypes": {
+    "Repository": {
+      "description": "Source repository",
+      "parent": "Entity",
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "Module": {
+      "description": "Build or source module",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Service": {
+      "description": "Deployed or deployable software service",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Class": {
+      "description": "Named type declaration",
+      "parent": "Entity",
+      "properties": {
+        "qualifiedName": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Method": {
+      "description": "Method or function",
+      "parent": "Entity",
+      "properties": {
+        "signature": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "ApiEndpoint": {
+      "description": "Network endpoint",
+      "parent": "Entity",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      }
+    },
+    "EventType": {
+      "description": "Typed business or integration event",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Table": {
+      "description": "Persistent table or collection",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "ConfigKey": {
+      "description": "Configuration entry",
+      "parent": "Entity",
+      "properties": {
+        "key": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Deployment": {
+      "description": "Versioned deployment",
+      "parent": "Event",
+      "properties": {}
+    },
+    "BusinessRule": {
+      "description": "Domain rule supported by observable evidence",
+      "parent": "Claim",
+      "properties": {}
+    },
+    "Commit": {
+      "description": "VCS revision",
+      "parent": "Event",
+      "properties": {
+        "sha": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "BrokerTopic": {
+      "description": "Message broker topic",
+      "parent": "Entity",
+      "properties": {}
+    }
+  },
+  "relationTypes": {
+    "containsModule": {
+      "from": [
+        "Repository"
+      ],
+      "to": [
+        "Module"
+      ],
+      "cardinality": "one-to-many"
+    },
+    "definesService": {
+      "from": [
+        "Module"
+      ],
+      "to": [
+        "Service"
+      ],
+      "cardinality": "one-to-many"
+    },
+    "containsClass": {
+      "from": [
+        "Module"
+      ],
+      "to": [
+        "Class"
+      ],
+      "cardinality": "one-to-many"
+    },
+    "definesMethod": {
+      "from": [
+        "Class"
+      ],
+      "to": [
+        "Method"
+      ],
+      "cardinality": "one-to-many"
+    },
+    "exposesApi": {
+      "from": [
+        "Service"
+      ],
+      "to": [
+        "ApiEndpoint"
+      ],
+      "cardinality": "one-to-many"
+    },
+    "callsService": {
+      "from": [
+        "Service"
+      ],
+      "to": [
+        "Service"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "publishes": {
+      "from": [
+        "Service"
+      ],
+      "to": [
+        "EventType"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "carriedBy": {
+      "from": [
+        "EventType"
+      ],
+      "to": [
+        "BrokerTopic"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "consumes": {
+      "from": [
+        "Service"
+      ],
+      "to": [
+        "EventType"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "writesTable": {
+      "from": [
+        "Service"
+      ],
+      "to": [
+        "Table"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "implementsRule": {
+      "from": [
+        "Service"
+      ],
+      "to": [
+        "BusinessRule"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "changesConfig": {
+      "from": [
+        "Commit"
+      ],
+      "to": [
+        "ConfigKey"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "configures": {
+      "from": [
+        "ConfigKey"
+      ],
+      "to": [
+        "Service"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "deploys": {
+      "from": [
+        "Deployment"
+      ],
+      "to": [
+        "Service"
+      ],
+      "cardinality": "many-to-many"
+    }
+  },
+  "constraints": []
+}

@@ -1,0 +1,124 @@
+{
+  "apiVersion": "oes.graph/v1",
+  "template": "people-relationship",
+  "metadata": {
+    "id": "family",
+    "ontologyVersion": "0.1.0",
+    "synthetic": true
+  },
+  "nodes": [
+    {
+      "id": "source",
+      "type": "Source",
+      "properties": {
+        "uri": "examples/sources/family.md",
+        "kind": "markdown"
+      }
+    },
+    {
+      "id": "evidence",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L2-L5",
+        "excerpt": "Lan is the parent of Mai; both belong to Family A."
+      }
+    },
+    {
+      "id": "lan",
+      "type": "Person",
+      "properties": {
+        "name": "Lan"
+      }
+    },
+    {
+      "id": "mai",
+      "type": "Person",
+      "properties": {
+        "name": "Mai"
+      }
+    },
+    {
+      "id": "family",
+      "type": "Group",
+      "properties": {
+        "label": "Family A"
+      }
+    },
+    {
+      "id": "reunion",
+      "type": "LifeEvent",
+      "properties": {
+        "label": "Family Reunion"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "p1",
+      "type": "parentOf",
+      "from": "lan",
+      "to": "mai",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "p2",
+      "type": "childOf",
+      "from": "mai",
+      "to": "lan",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "inferred"
+    },
+    {
+      "id": "p3",
+      "type": "memberOf",
+      "from": "lan",
+      "to": "family",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted",
+      "properties": {
+        "role": "mother"
+      }
+    },
+    {
+      "id": "p4",
+      "type": "memberOf",
+      "from": "mai",
+      "to": "family",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted",
+      "properties": {
+        "role": "child"
+      }
+    },
+    {
+      "id": "p5",
+      "type": "participatedInLifeEvent",
+      "from": "lan",
+      "to": "reunion",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "p6",
+      "type": "participatedInLifeEvent",
+      "from": "mai",
+      "to": "reunion",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    }
+  ]
+}

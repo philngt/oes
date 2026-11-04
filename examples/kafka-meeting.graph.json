@@ -1,0 +1,116 @@
+{
+  "apiVersion": "oes.graph/v1",
+  "template": "knowledge-evidence",
+  "metadata": {
+    "id": "kafka-meeting",
+    "ontologyVersion": "0.1.0",
+    "synthetic": true
+  },
+  "nodes": [
+    {
+      "id": "source",
+      "type": "Source",
+      "properties": {
+        "uri": "examples/sources/kafka-meeting.md",
+        "kind": "markdown"
+      }
+    },
+    {
+      "id": "evidence",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L4-L5",
+        "excerpt": "Decision: Increase producer delivery.timeout.ms to 300000"
+      }
+    },
+    {
+      "id": "meeting",
+      "type": "Conversation",
+      "properties": {
+        "title": "Kafka delivery review"
+      }
+    },
+    {
+      "id": "speaker",
+      "type": "Actor",
+      "properties": {
+        "name": "Binh"
+      }
+    },
+    {
+      "id": "message",
+      "type": "Message",
+      "properties": {
+        "content": "Binh will implement a configuration proof of concept."
+      }
+    },
+    {
+      "id": "decision",
+      "type": "Decision",
+      "properties": {
+        "statement": "Increase producer delivery.timeout.ms to 300000",
+        "status": "accepted"
+      }
+    },
+    {
+      "id": "action",
+      "type": "ActionItem",
+      "properties": {
+        "summary": "Implement producer configuration PoC"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "m1",
+      "type": "containsMessage",
+      "from": "meeting",
+      "to": "message",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "m2",
+      "type": "authoredBy",
+      "from": "message",
+      "to": "speaker",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "m3",
+      "type": "supportedBy",
+      "from": "decision",
+      "to": "evidence",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "m4",
+      "type": "recordedIn",
+      "from": "decision",
+      "to": "meeting",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "m5",
+      "type": "assignedTo",
+      "from": "action",
+      "to": "speaker",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    }
+  ]
+}

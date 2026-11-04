@@ -1,0 +1,148 @@
+{
+  "apiVersion": "oes/v1",
+  "kind": "OntologyTemplate",
+  "metadata": {
+    "id": "knowledge-evidence",
+    "version": "0.1.0",
+    "description": "Evidence-first extraction from conversations, tickets and meetings"
+  },
+  "extends": [
+    "core"
+  ],
+  "entityTypes": {
+    "Conversation": {
+      "description": "Conversation or meeting",
+      "parent": "Event",
+      "properties": {
+        "title": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Message": {
+      "description": "Individual utterance",
+      "parent": "Event",
+      "properties": {
+        "content": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Actor": {
+      "description": "Speaker or task owner",
+      "parent": "Entity",
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Topic": {
+      "description": "Discussion topic",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Decision": {
+      "description": "Decision explicitly made or proposed",
+      "parent": "Claim",
+      "properties": {
+        "decidedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "ActionItem": {
+      "description": "Follow-up assignment",
+      "parent": "Entity",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "required": true
+        },
+        "dueAt": {
+          "type": "string"
+        }
+      }
+    },
+    "Ticket": {
+      "description": "Ticket or work item",
+      "parent": "Entity",
+      "properties": {
+        "key": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  },
+  "relationTypes": {
+    "containsMessage": {
+      "from": [
+        "Conversation"
+      ],
+      "to": [
+        "Message"
+      ],
+      "cardinality": "one-to-many"
+    },
+    "authoredBy": {
+      "from": [
+        "Message"
+      ],
+      "to": [
+        "Actor"
+      ],
+      "cardinality": "many-to-one"
+    },
+    "discusses": {
+      "from": [
+        "Conversation"
+      ],
+      "to": [
+        "Topic"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "recordedIn": {
+      "from": [
+        "Decision",
+        "ActionItem"
+      ],
+      "to": [
+        "Conversation"
+      ],
+      "cardinality": "many-to-one"
+    },
+    "assignedTo": {
+      "from": [
+        "ActionItem"
+      ],
+      "to": [
+        "Actor"
+      ],
+      "cardinality": "many-to-one"
+    },
+    "tracks": {
+      "from": [
+        "Ticket"
+      ],
+      "to": [
+        "ActionItem"
+      ],
+      "cardinality": "many-to-many"
+    }
+  },
+  "constraints": [
+    {
+      "id": "decision-evidence",
+      "kind": "requiresEdge",
+      "nodeType": "Decision",
+      "edgeType": "supportedBy",
+      "direction": "out",
+      "severity": "warning"
+    }
+  ]
+}

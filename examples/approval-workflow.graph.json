@@ -1,0 +1,115 @@
+{
+  "apiVersion": "oes.graph/v1",
+  "template": "workflow-process",
+  "metadata": {
+    "id": "approval-workflow",
+    "ontologyVersion": "0.1.0",
+    "synthetic": true
+  },
+  "nodes": [
+    {
+      "id": "source",
+      "type": "Source",
+      "properties": {
+        "uri": "examples/sources/approval-workflow.md",
+        "kind": "markdown"
+      }
+    },
+    {
+      "id": "evidence",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L2-L6",
+        "excerpt": "The finance step follows manager review; owner: Linh."
+      }
+    },
+    {
+      "id": "process",
+      "type": "Process",
+      "properties": {
+        "label": "Purchase approval"
+      }
+    },
+    {
+      "id": "manager",
+      "type": "Step",
+      "properties": {
+        "label": "Manager review"
+      }
+    },
+    {
+      "id": "finance",
+      "type": "Step",
+      "properties": {
+        "label": "Finance review"
+      }
+    },
+    {
+      "id": "task",
+      "type": "Task",
+      "properties": {
+        "label": "Review purchase request"
+      }
+    },
+    {
+      "id": "linh",
+      "type": "Person",
+      "properties": {
+        "name": "Linh"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "w1",
+      "type": "hasStep",
+      "from": "process",
+      "to": "manager",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "w2",
+      "type": "hasStep",
+      "from": "process",
+      "to": "finance",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "w3",
+      "type": "precedes",
+      "from": "manager",
+      "to": "finance",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "w4",
+      "type": "createsTask",
+      "from": "manager",
+      "to": "task",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "w5",
+      "type": "assignedToPerson",
+      "from": "task",
+      "to": "linh",
+      "evidenceIds": [
+        "evidence"
+      ],
+      "assertionStatus": "asserted"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "apiVersion": "oes/v1",
+  "kind": "OntologyTemplate",
+  "metadata": {
+    "id": "workflow-process",
+    "version": "0.1.0",
+    "description": "Process and human interaction modeling, tasks, roles, and handoffs"
+  },
+  "extends": [
+    "core"
+  ],
+  "entityTypes": {
+    "Process": {
+      "description": "Workflow or standard operating procedure",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Step": {
+      "description": "Ordered process activity",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Task": {
+      "description": "Assignable unit of work",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Role": {
+      "description": "Responsibility role",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Person": {
+      "description": "Individual participant",
+      "parent": "Entity",
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Team": {
+      "description": "Group with organizational responsibilities",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Policy": {
+      "description": "Governing policy statement",
+      "parent": "Claim",
+      "properties": {}
+    },
+    "DecisionGate": {
+      "description": "Conditional process transition",
+      "parent": "Entity",
+      "properties": {}
+    },
+    "Handoff": {
+      "description": "Handoff observation",
+      "parent": "Event",
+      "properties": {}
+    },
+    "Interaction": {
+      "description": "Observed interaction",
+      "parent": "Event",
+      "properties": {}
+    }
+  },
+  "relationTypes": {
+    "hasStep": {
+      "from": [
+        "Process"
+      ],
+      "to": [
+        "Step"
+      ],
+      "cardinality": "one-to-many"
+    },
+    "precedes": {
+      "from": [
+        "Step"
+      ],
+      "to": [
+        "Step"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "createsTask": {
+      "from": [
+        "Step"
+      ],
+      "to": [
+        "Task"
+      ],
+      "cardinality": "one-to-many"
+    },
+    "performedByRole": {
+      "from": [
+        "Step"
+      ],
+      "to": [
+        "Role"
+      ],
+      "cardinality": "many-to-one"
+    },
+    "assignedToPerson": {
+      "from": [
+        "Task"
+      ],
+      "to": [
+        "Person"
+      ],
+      "cardinality": "many-to-one"
+    },
+    "governedBy": {
+      "from": [
+        "Process",
+        "Step"
+      ],
+      "to": [
+        "Policy"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "handsOffTo": {
+      "from": [
+        "Step"
+      ],
+      "to": [
+        "Step"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "participatesIn": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "Interaction"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "memberOfTeam": {
+      "from": [
+        "Person"
+      ],
+      "to": [
+        "Team"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "followsStep": {
+      "from": [
+        "Interaction"
+      ],
+      "to": [
+        "Step"
+      ],
+      "cardinality": "many-to-many"
+    }
+  },
+  "constraints": [
+    {
+      "id": "task-owner",
+      "kind": "requiresEdge",
+      "nodeType": "Task",
+      "edgeType": "assignedToPerson",
+      "direction": "out",
+      "severity": "warning"
+    }
+  ]
+}

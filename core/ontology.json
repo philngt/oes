@@ -1,0 +1,127 @@
+{
+  "apiVersion": "oes/v1",
+  "kind": "OntologyTemplate",
+  "metadata": {
+    "id": "core",
+    "version": "0.1.0",
+    "description": "Portable identity, evidence, assertion, and temporal primitives"
+  },
+  "extends": [],
+  "entityTypes": {
+    "Entity": {
+      "description": "Identified thing",
+      "properties": {
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "Source": {
+      "description": "Original immutable or version-addressable source",
+      "parent": "Entity",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "required": true
+        },
+        "kind": {
+          "type": "string"
+        }
+      }
+    },
+    "Evidence": {
+      "description": "An exact locator and excerpt pointing to a source",
+      "parent": "Entity",
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "required": true
+        },
+        "locator": {
+          "type": "string",
+          "required": true
+        },
+        "excerpt": {
+          "type": "string"
+        }
+      }
+    },
+    "Claim": {
+      "description": "A claim, not automatically a fact",
+      "parent": "Entity",
+      "properties": {
+        "statement": {
+          "type": "string",
+          "required": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "superseded"
+          ]
+        }
+      }
+    },
+    "Event": {
+      "description": "A happening, optionally located in time",
+      "parent": "Entity",
+      "properties": {
+        "occurredAt": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "relationTypes": {
+    "supportedBy": {
+      "from": [
+        "Claim"
+      ],
+      "to": [
+        "Evidence"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "contradicts": {
+      "from": [
+        "Claim"
+      ],
+      "to": [
+        "Claim"
+      ],
+      "cardinality": "many-to-many",
+      "symmetric": true
+    },
+    "supersedes": {
+      "from": [
+        "Claim"
+      ],
+      "to": [
+        "Claim"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "documentedIn": {
+      "from": [
+        "*"
+      ],
+      "to": [
+        "Source"
+      ],
+      "cardinality": "many-to-many"
+    },
+    "derivedFrom": {
+      "from": [
+        "*"
+      ],
+      "to": [
+        "*"
+      ],
+      "cardinality": "many-to-many"
+    }
+  },
+  "constraints": []
+}
