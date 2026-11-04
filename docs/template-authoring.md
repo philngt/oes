@@ -29,6 +29,13 @@ Create `templates/<id>/ontology.json`:
 
 An `EntityType` supports `parent`, `description` and `properties`. Property types currently supported: string, integer, number, boolean, array, object; rule options: `required` and `enum`.
 
+Every property rule must be an object with a supported `type`. When present,
+`required` must be a boolean and `enum` must be a nonempty array whose values
+have that declared type. A string such as `"enum": "open"` is a template error,
+not a substring constraint. Graph validation returns template diagnostics before
+evaluating any graph against malformed rules. Structured enum values use JSON
+structural equality: object key order is ignored, while array order is preserved.
+
 A `RelationType` has `from`, `to` (arrays of allowed type names, or wildcard `*`), optional `description`, `properties`, `inverse`, `symmetric`, `allowSelf` and `cardinality`. `inverse` requires reciprocal declarations, but does not synthesize inverse instances.
 
 ## 3. Cardinality convention

@@ -38,6 +38,24 @@ The first standalone OES check is useful for inspecting an authored graph. conte
 
 The [consumer guide in contextd](https://github.com/philngt/contextd/blob/main/docs/oes-integration.md) owns detailed output fields, tests and selection behavior. Omit the two OES flags for the ordinary contextd path; that path does not require Node.js or OES.
 
+For an application with its own project configuration and separate knowledge
+root, use contextd's [external-project example](https://github.com/philngt/contextd/tree/main/examples/external-project).
+It demonstrates both a missing task route and a useful evidence-backed route.
+
+## Scoped Coverage, Including Misses
+
+contextd distinguishes a literal document match, a declared component route,
+and a validated OES evidence route. Documents with only category/lifecycle
+priority are ineligible. Zero selected support produces an actionable gap;
+general static guidance does not close it.
+
+With an explicitly supplied graph, a task that matches no evidenced assertion
+produces `coverage.graph.status: no_match` and an `oes-coverage` gap. If matched
+evidence routes are all excluded by budgets, the status is `not_selected`.
+These reports describe the supplied graph and selected context, not absence
+from every possible workspace source. `coverage.complete` remains false.
+Coverage and gaps enter the compiled agent pack along with the citations.
+
 ## Supported handoff contract
 
 | Field | Consumer requirement |
