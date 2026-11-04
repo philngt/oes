@@ -13,4 +13,6 @@ jobs:
           node-version: '22'
       - run: npm test
       - run: npm run validate
+      - run: node bin/oes.mjs check-all --require-hash --warnings-as-errors
+      - run: npm run demo
 

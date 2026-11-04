@@ -19,7 +19,7 @@ A `Claim` may also have a separate lifecycle status: proposed, accepted, rejecte
 
 1. Preserve a source URI/version (commit SHA, ticket revision, or document revision).
 2. Give each evidence record a stable ID and exact locator (line range, offset, timestamp, message ID).
-3. Link every asserted/inferred/hypothesis edge to evidenceIds.
+3. Link every asserted/inferred/hypothesis edge to evidenceIds. A core supportedBy citation may use its Evidence target directly instead of redundant evidenceIds.
 4. Differentiate recorded observations from derived interpretations.
 5. Keep conflicting claims; do not automatically overwrite or choose a winner.
 6. When evidence is deleted or access is revoked, ensure downstream indexes and cached references are invalidated (consumer responsibility).
@@ -36,3 +36,7 @@ The built-in CLI checks structural integrity: known types/relations, endpoint co
 
 On unresolved identity, ambiguous relationship, contradictory claims, unsupported mapping or insufficient evidence: output a **candidate** and request review, or leave the edge out. Never invent confidence as a substitute for evidence. Inferred links should remain separately identifiable.
 
+
+## Local integrity gate
+
+`check-evidence` now verifies exact local line spans and optional/required source hashes. It does not decide truth or entailment; matching a quotation is not verification of the asserted relationship. Use `--warnings-as-errors --require-hash` for acceptance. Remote sources are skipped explicitly. See [checker contract](evidence-checking.md).

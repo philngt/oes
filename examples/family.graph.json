@@ -12,16 +12,44 @@
       "type": "Source",
       "properties": {
         "uri": "examples/sources/family.md",
-        "kind": "markdown"
+        "kind": "markdown",
+        "sha256": "f741345fbb4ea6b4955a7d980de065e078e2bcaafb8da5d02ebd5221b1c541d6"
       }
     },
     {
-      "id": "evidence",
+      "id": "ev-parent",
       "type": "Evidence",
       "properties": {
         "sourceId": "source",
-        "locator": "L2-L5",
-        "excerpt": "Lan is the parent of Mai; both belong to Family A."
+        "locator": "L2",
+        "excerpt": "Lan is the parent of Mai."
+      }
+    },
+    {
+      "id": "ev-lan-member",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L3",
+        "excerpt": "Lan belongs to Family A as mother."
+      }
+    },
+    {
+      "id": "ev-mai-member",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L4",
+        "excerpt": "Mai belongs to Family A as child."
+      }
+    },
+    {
+      "id": "ev-reunion",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L5",
+        "excerpt": "Lan and Mai attended Family Reunion."
       }
     },
     {
@@ -60,7 +88,7 @@
       "from": "lan",
       "to": "mai",
       "evidenceIds": [
-        "evidence"
+        "ev-parent"
       ],
       "assertionStatus": "asserted"
     },
@@ -70,9 +98,14 @@
       "from": "mai",
       "to": "lan",
       "evidenceIds": [
-        "evidence"
+        "ev-parent"
       ],
-      "assertionStatus": "inferred"
+      "assertionStatus": "inferred",
+      "properties": {
+        "inferenceRule": "inverse(parentOf, childOf)",
+        "premiseEdgeId": "p1",
+        "explanation": "Manually authored application of the declared inverse; the engine does not derive this edge."
+      }
     },
     {
       "id": "p3",
@@ -80,7 +113,7 @@
       "from": "lan",
       "to": "family",
       "evidenceIds": [
-        "evidence"
+        "ev-lan-member"
       ],
       "assertionStatus": "asserted",
       "properties": {
@@ -93,7 +126,7 @@
       "from": "mai",
       "to": "family",
       "evidenceIds": [
-        "evidence"
+        "ev-mai-member"
       ],
       "assertionStatus": "asserted",
       "properties": {
@@ -106,7 +139,7 @@
       "from": "lan",
       "to": "reunion",
       "evidenceIds": [
-        "evidence"
+        "ev-reunion"
       ],
       "assertionStatus": "asserted"
     },
@@ -116,7 +149,7 @@
       "from": "mai",
       "to": "reunion",
       "evidenceIds": [
-        "evidence"
+        "ev-reunion"
       ],
       "assertionStatus": "asserted"
     }

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/philngt/oes/blob/main/contracts/graph-envelope.schema.json",
+  "title": "OES graph envelope (domain semantics validated by engine)",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "template",
+    "nodes",
+    "edges"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "oes.graph/v1"
+    },
+    "template": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "properties"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "properties": {
+            "type": "object"
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "from",
+          "to",
+          "assertionStatus"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assertionStatus": {
+            "enum": [
+              "asserted",
+              "verified",
+              "inferred",
+              "hypothesis"
+            ]
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "properties": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

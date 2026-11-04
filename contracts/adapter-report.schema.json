@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/philngt/oes/blob/main/contracts/adapter-report.schema.json",
+  "title": "Git adapter report",
+  "type": "object",
+  "required": [
+    "commits",
+    "implementsLinks",
+    "decisionLinks",
+    "unresolved"
+  ],
+  "properties": {
+    "commits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "implementsLinks": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "decisionLinks": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "commit",
+          "reference",
+          "reason"
+        ],
+        "properties": {
+          "commit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

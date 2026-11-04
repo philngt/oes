@@ -1,7 +1,7 @@
-# Purchase request workflow
+# Purchase request workflow (synthetic)
 Process: Purchase approval
-Step 1: Manager review
-Step 2: Finance review
-Task: Review purchase request
-Owner: Linh
-The finance step follows manager review.
+Manager review is a step of Purchase approval.
+Finance review is a step of Purchase approval.
+Finance review follows Manager review.
+Manager review creates the task "Review purchase request".
+Task "Review purchase request" is assigned to Linh.

@@ -12,7 +12,8 @@
   },
   "scripts": {
     "test": "node --test",
-    "validate": "node bin/oes.mjs check-all"
+    "validate": "node bin/oes.mjs check-all",
+    "demo": "node demo/run.mjs"
   },
   "license": "MIT",
   "repository": {

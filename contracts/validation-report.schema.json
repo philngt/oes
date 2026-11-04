@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/philngt/oes/blob/main/contracts/validation-report.schema.json",
+  "title": "OES check-evidence/check-graph JSON report",
+  "type": "object",
+  "required": [
+    "command",
+    "passed",
+    "diagnostics"
+  ],
+  "properties": {
+    "command": {
+      "type": "string",
+      "minLength": 1
+    },
+    "passed": {
+      "type": "boolean"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "code",
+          "path",
+          "message"
+        ],
+        "properties": {
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "checked",
+        "skipped"
+      ],
+      "properties": {
+        "checked": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "skipped": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

@@ -6,6 +6,18 @@
 
 This project combines **agent-facing engineering skills**, **declarative ontology templates**, **source-adapter playbooks**, and a **small deterministic reference validator**. Its long-term ambition is to make ontology engineering repeatable for both humans and AI agents. **The current release (v0.2.0) is a starter kit, not an autonomous ontology builder or production knowledge-graph platform.**
 
+## Reproducible proof of work
+
+Run **`npm run demo`** for a bounded meeting → ticket → real local Git commit demonstration. It generates synthetic records, two actual Git commits, a graph and evidence-bearing answer. It calls `check-graph` and `check-evidence`, then confirms that a bare ticket mention is not linked and that a fabricated quotation is rejected.
+
+```bash
+npm run demo
+node bin/oes.mjs check-evidence examples/kafka-meeting.graph.json \
+  --source-root . --require-hash --warnings-as-errors --json
+```
+
+See [the executable demo](demo/README.md) and [exact local evidence checking](docs/evidence-checking.md). This is a deterministic proof of work with synthetic source content, **not** an actual agent run, a human-labeled evaluation benchmark, or semantic verification. No video is claimed. The 12 skills and existing domain templates remain unchanged in number.
+
 ## 1. Vision: why this exists
 
 Important knowledge is fragmented across conversations, meeting notes, tickets, documents, code, configurations, and people. Those sources express different parts of the same reality:
@@ -91,7 +103,7 @@ These are engineering principles. Some have runtime support today; others are ex
         JSON-LD/DOT exports      Future graph/query consumers
 ~~~
 
-**Boundary:** Adapter files currently describe extraction procedures; they do not run ingestion. Skills are agent instructions, not a hidden daemon. The CLI validates *supplied* JSON templates and graphs; it does not autonomously read a repository and discover an ontology.
+**Boundary:** The Markdown adapter playbooks describe general procedures. The two executable adapters in `adapters/meeting.mjs` and `adapters/git.mjs` cover only the narrow, explicit formats documented in the demo. Skills are agent instructions, not a hidden daemon. The CLI validates *supplied* JSON templates and graphs; it does not autonomously read a repository and discover an ontology.
 
 ### The smallest shared core
 
@@ -295,7 +307,7 @@ Requires **Node.js 20+**. No third-party runtime dependencies are required.
 
 ~~~bash
 git clone https://github.com/philngt/oes.git
-cd ontology-engineering-skills
+cd oes
 
 npm test
 npm run validate
@@ -321,7 +333,7 @@ JSON-LD export represents edges as **RelationAssertion resources**, preserving e
 core/                 Minimal shared vocabulary
 templates/            Composable, versioned ontology definitions
 skills/               12 agent-facing SKILL.md instructions
-adapters/             Source-specific playbooks (not running connectors)
+adapters/             Two narrow executable adapters + source-specific playbooks
 lib/                  Reference validation/serialization functions
 bin/                  CLI for checks and exports
 examples/             Four synthetic source-grounded graph fixtures
@@ -340,7 +352,7 @@ docs/                 Architecture, authoring, evidence policy and roadmap
 | Structural graph validation: types, endpoints, properties, cardinality | **Implemented** |
 | Evidence reference checks, assertion status, basic date checks | **Implemented** |
 | JSON-LD assertion export and DOT visualization | **Implemented** |
-| Automated ingestion from meetings/tickets/source code | **Not implemented** (adapter playbooks only) |
+| Deterministic extraction from explicit meeting records and local Git | **Implemented, narrowly scoped** — see `demo/`; arbitrary prose, hosted connectors and source-code analysis are not implemented |
 | Cross-source entity resolution and automatic knowledge extraction | **Not implemented** (skill instructions only) |
 | Semantic inference, inverse-edge materialization, SHACL/OWL/SPARQL engine | **Not implemented** |
 | Persistent graph storage, graph query API, incremental reindexing | **Not implemented** |

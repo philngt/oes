@@ -12,16 +12,53 @@
       "type": "Source",
       "properties": {
         "uri": "examples/sources/approval-workflow.md",
-        "kind": "markdown"
+        "kind": "markdown",
+        "sha256": "631f3875f6653917738d0ef366cf87bcd946594cba001dae7288534121e67f4b"
       }
     },
     {
-      "id": "evidence",
+      "id": "ev-w1",
       "type": "Evidence",
       "properties": {
         "sourceId": "source",
-        "locator": "L2-L6",
-        "excerpt": "The finance step follows manager review; owner: Linh."
+        "locator": "L3",
+        "excerpt": "Manager review is a step of Purchase approval."
+      }
+    },
+    {
+      "id": "ev-w2",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L4",
+        "excerpt": "Finance review is a step of Purchase approval."
+      }
+    },
+    {
+      "id": "ev-w3",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L5",
+        "excerpt": "Finance review follows Manager review."
+      }
+    },
+    {
+      "id": "ev-w4",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L6",
+        "excerpt": "Manager review creates the task \"Review purchase request\"."
+      }
+    },
+    {
+      "id": "ev-w5",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L7",
+        "excerpt": "Task \"Review purchase request\" is assigned to Linh."
       }
     },
     {
@@ -67,7 +104,7 @@
       "from": "process",
       "to": "manager",
       "evidenceIds": [
-        "evidence"
+        "ev-w1"
       ],
       "assertionStatus": "asserted"
     },
@@ -77,7 +114,7 @@
       "from": "process",
       "to": "finance",
       "evidenceIds": [
-        "evidence"
+        "ev-w2"
       ],
       "assertionStatus": "asserted"
     },
@@ -87,7 +124,7 @@
       "from": "manager",
       "to": "finance",
       "evidenceIds": [
-        "evidence"
+        "ev-w3"
       ],
       "assertionStatus": "asserted"
     },
@@ -97,7 +134,7 @@
       "from": "manager",
       "to": "task",
       "evidenceIds": [
-        "evidence"
+        "ev-w4"
       ],
       "assertionStatus": "asserted"
     },
@@ -107,7 +144,7 @@
       "from": "task",
       "to": "linh",
       "evidenceIds": [
-        "evidence"
+        "ev-w5"
       ],
       "assertionStatus": "asserted"
     }

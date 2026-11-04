@@ -12,16 +12,35 @@
       "type": "Source",
       "properties": {
         "uri": "examples/sources/kafka-meeting.md",
-        "kind": "markdown"
+        "kind": "markdown",
+        "sha256": "704409e25772ee3836f2f79e80868f1664145aca50e3f9823ab2772793a77a7b"
       }
     },
     {
-      "id": "evidence",
+      "id": "ev-decision",
       "type": "Evidence",
       "properties": {
         "sourceId": "source",
-        "locator": "L4-L5",
-        "excerpt": "Decision: Increase producer delivery.timeout.ms to 300000"
+        "locator": "L4",
+        "excerpt": "Decision: Increase producer delivery.timeout.ms to 300000 after lost writes investigation."
+      }
+    },
+    {
+      "id": "ev-action",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L5",
+        "excerpt": "Binh will implement a configuration proof of concept."
+      }
+    },
+    {
+      "id": "ev-limitation",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source",
+        "locator": "L6",
+        "excerpt": "Evidence: incident notes link the missing records to swallowed consumer DB timeouts; the producer change does not by itself fix lost writes."
       }
     },
     {
@@ -32,7 +51,7 @@
       }
     },
     {
-      "id": "speaker",
+      "id": "binh",
       "type": "Actor",
       "properties": {
         "name": "Binh"
@@ -59,6 +78,14 @@
       "properties": {
         "summary": "Implement producer configuration PoC"
       }
+    },
+    {
+      "id": "limitation",
+      "type": "Claim",
+      "properties": {
+        "statement": "The producer change does not by itself fix lost writes.",
+        "status": "proposed"
+      }
     }
   ],
   "edges": [
@@ -68,17 +95,7 @@
       "from": "meeting",
       "to": "message",
       "evidenceIds": [
-        "evidence"
-      ],
-      "assertionStatus": "asserted"
-    },
-    {
-      "id": "m2",
-      "type": "authoredBy",
-      "from": "message",
-      "to": "speaker",
-      "evidenceIds": [
-        "evidence"
+        "ev-action"
       ],
       "assertionStatus": "asserted"
     },
@@ -86,10 +103,7 @@
       "id": "m3",
       "type": "supportedBy",
       "from": "decision",
-      "to": "evidence",
-      "evidenceIds": [
-        "evidence"
-      ],
+      "to": "ev-decision",
       "assertionStatus": "asserted"
     },
     {
@@ -98,7 +112,7 @@
       "from": "decision",
       "to": "meeting",
       "evidenceIds": [
-        "evidence"
+        "ev-decision"
       ],
       "assertionStatus": "asserted"
     },
@@ -106,9 +120,26 @@
       "id": "m5",
       "type": "assignedTo",
       "from": "action",
-      "to": "speaker",
+      "to": "binh",
       "evidenceIds": [
-        "evidence"
+        "ev-action"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "m6",
+      "type": "supportedBy",
+      "from": "limitation",
+      "to": "ev-limitation",
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "m7",
+      "type": "documentedIn",
+      "from": "limitation",
+      "to": "source",
+      "evidenceIds": [
+        "ev-limitation"
       ],
       "assertionStatus": "asserted"
     }
