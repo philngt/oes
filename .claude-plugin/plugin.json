@@ -1,0 +1,18 @@
+{
+  "name": "ontology-engineering-skills",
+  "version": "0.2.0",
+  "description": "Reusable evidence-first skills for discovering, modeling, validating, composing, and evolving domain ontologies.",
+  "author": {
+    "name": "philngt",
+    "url": "https://github.com/philngt"
+  },
+  "homepage": "https://github.com/philngt/oes",
+  "repository": "https://github.com/philngt/oes",
+  "license": "MIT",
+  "keywords": [
+    "ontology",
+    "semantics",
+    "knowledge-graph",
+    "skills"
+  ]
+}

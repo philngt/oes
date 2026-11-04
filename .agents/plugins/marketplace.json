@@ -1,0 +1,23 @@
+{
+  "name": "oes",
+  "interface": {
+    "displayName": "Ontology Engineering Skills"
+  },
+  "plugins": [
+    {
+      "name": "ontology-engineering-skills",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "Ontology Engineering Skills"
+      }
+    }
+  ]
+}

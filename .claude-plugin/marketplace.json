@@ -1,0 +1,20 @@
+{
+  "name": "oes",
+  "description": "Ontology Engineering Skills: composable, evidence-first semantic modeling for coding and research agents.",
+  "owner": {
+    "name": "philngt",
+    "url": "https://github.com/philngt"
+  },
+  "plugins": [
+    {
+      "name": "ontology-engineering-skills",
+      "source": {
+        "source": "github",
+        "repo": "philngt/oes"
+      },
+      "description": "Reusable evidence-first skills for discovering, modeling, validating, composing, and evolving domain ontologies.",
+      "category": "development",
+      "license": "MIT"
+    }
+  ]
+}

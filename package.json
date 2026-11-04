@@ -1,6 +1,6 @@
 {
   "name": "@philngt/ontology-engineering-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Reusable ontology engineering skills, composable templates and evidence-aware graph validation",
   "type": "module",
@@ -13,5 +13,10 @@
   "scripts": {
     "test": "node --test",
     "validate": "node bin/oes.mjs check-all"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philngt/oes.git"
   }
 }

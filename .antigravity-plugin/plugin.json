@@ -1,0 +1,27 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "ontology-engineering-skills",
+  "displayName": "Ontology Engineering Skills",
+  "version": "0.2.0",
+  "description": "Reusable evidence-first skills for discovering, modeling, validating, composing, and evolving domain ontologies.",
+  "logo": "assets/oes-icon.svg",
+  "suggestedPrompts": [
+    "Design an evidence-first ontology for these meeting notes and tickets.",
+    "Model a repository's services, APIs, events and dependencies as a software ontology.",
+    "Connect workflow decisions to source code changes with traceable evidence."
+  ],
+  "author": {
+    "name": "philngt",
+    "url": "https://github.com/philngt"
+  },
+  "homepage": "https://github.com/philngt/oes",
+  "repository": "https://github.com/philngt/oes",
+  "license": "MIT",
+  "keywords": [
+    "ontology",
+    "knowledge",
+    "semantic",
+    "engineering",
+    "skills"
+  ]
+}

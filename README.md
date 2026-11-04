@@ -4,7 +4,7 @@
 
 > **Thesis:** Do not build one universal ontology. Build a repeatable *ontology engineering capability* that can create many bounded ontologies, connect them when useful, and preserve why each relationship is believed to exist.
 
-This project combines **agent-facing engineering skills**, **declarative ontology templates**, **source-adapter playbooks**, and a **small deterministic reference validator**. Its long-term ambition is to make ontology engineering repeatable for both humans and AI agents. **The current release (v0.1.0) is a starter kit, not an autonomous ontology builder or production knowledge-graph platform.**
+This project combines **agent-facing engineering skills**, **declarative ontology templates**, **source-adapter playbooks**, and a **small deterministic reference validator**. Its long-term ambition is to make ontology engineering repeatable for both humans and AI agents. **The current release (v0.2.0) is a starter kit, not an autonomous ontology builder or production knowledge-graph platform.**
 
 ## 1. Vision: why this exists
 
@@ -184,7 +184,7 @@ This diagram is a **conceptual integration scenario**, not a claim that the samp
 
 Cross-domain links must be **explicit and supported**. A matching title, similar embedding, or common timestamp is not enough to establish that a commit implements a ticket or fulfills a decision.
 
-### How composition works in v0.1.0
+### How composition works in v0.2.0
 
 - A template can `extends` one or more templates; shared `core` definitions are reused.
 - Identically named types/relations must have equivalent definitions; incompatible definitions cause compilation to fail.
@@ -277,10 +277,24 @@ The template DSL is JSON and supports type declarations, property checks, domain
 
 ## 10. Quick start — what works today
 
+### Install via Claude Code, Codex, or Antigravity
+
+This repository is also a **single skills plugin** with one canonical `skills/` tree and host-specific manifests. Use the GitHub marketplace/plugin installation supported by each host:
+
+| Host | Install |
+| --- | --- |
+| **Claude Code** | `claude plugin marketplace add philngt/oes` then `claude plugin install ontology-engineering-skills@oes` |
+| **Codex** | `codex plugin marketplace add philngt/oes` then `codex plugin add ontology-engineering-skills@oes` (or install from the Plugins browser) |
+| **Antigravity / Agy** | `agy plugin install https://github.com/philngt/oes` |
+
+See **[Installation by agent host](docs/installation.md)** for interactive commands, validation and usage. This enables installation from a GitHub-hosted marketplace or plugin source; **it does not imply publication in any vendor's official curated directory**.
+
+### Use the reference CLI directly
+
 Requires **Node.js 20+**. No third-party runtime dependencies are required.
 
 ~~~bash
-git clone https://github.com/philngt/ontology-engineering-skills.git
+git clone https://github.com/philngt/oes.git
 cd ontology-engineering-skills
 
 npm test
@@ -318,7 +332,7 @@ docs/                 Architecture, authoring, evidence policy and roadmap
 
 ## 11. What exists, and what is still a goal?
 
-| Capability | v0.1.0 status |
+| Capability | v0.2.0 status |
 | --- | --- |
 | Reusable engineering skill documents | **Implemented** (12 skills) |
 | Core and domain ontology templates | **Implemented** (four domain templates + cross-domain composition) |
@@ -348,4 +362,4 @@ See the [roadmap](docs/roadmap.md) for planned evolution.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), [architecture and boundaries](docs/architecture.md), and [evidence and privacy policy](docs/evidence-policy.md).
 
-**License:** Not yet selected by the repository owner.
+**License:** [MIT](LICENSE) © 2026 Ngô Tấn Phúc.

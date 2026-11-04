@@ -9,5 +9,5 @@
 
 Avoid claims of inference capabilities or format compliance that the runtime does not implement. Do not submit private data, real people records, credentials, or proprietary documents as fixtures.
 
-The repository intentionally has no default license yet; licensing is an owner decision.
+Contributions are provided under the [MIT License](LICENSE) unless explicitly agreed otherwise. Include the copyright and permission notice when redistributing substantial portions.
 
