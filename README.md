@@ -6,6 +6,19 @@
 
 This project combines **agent-facing engineering skills**, **declarative ontology templates**, **source-adapter playbooks**, and a **small deterministic reference validator**. Its long-term ambition is to make ontology engineering repeatable for both humans and AI agents. **The current release (v0.2.0) is a starter kit, not an autonomous ontology builder or production knowledge-graph platform.**
 
+## Part of the contextd ecosystem
+
+**OES is the ontology and evidence layer of the [contextd](https://github.com/philngt/contextd) ecosystem. contextd consumes OES graphs to build task-specific context for agents.**
+
+| Project | Responsibility | Output |
+| --- | --- | --- |
+| **OES** | Define bounded ontologies; represent entities, assertions, evidence and source provenance; validate graph structure and exact local source excerpts | Portable `oes.graph/v1` JSON with stable IDs, evidence locators and assertion statuses |
+| **contextd** | Select relevant documents from the active workspace, apply knowledge priority and context budgets, and explain selections with their evidence | Scoped context artifacts for agent adapters |
+
+The integration follows the evidence chain from a matching graph assertion to its `Evidence` records and `Source` documents. OES owns ontology validation and source checking; contextd owns workspace boundaries, document selection and delivery to agents. The graph remains a portable artifact: OES can serve other consumers, and contextd can run without an OES graph.
+
+See the [contextd integration guide](docs/contextd-integration.md) for the runnable handoff, validation boundary and supported evidence mapping. Passing `oes check-graph` establishes structural validity; it does not establish that a claim is true or that an excerpt matches its source.
+
 ## Reproducible proof of work
 
 Run **`npm run demo`** for a bounded meeting → ticket → real local Git commit demonstration. It generates synthetic records, two actual Git commits, a graph and evidence-bearing answer. It calls `check-graph` and `check-evidence`, then confirms that a bare ticket mention is not linked and that a fabricated quotation is rejected.
