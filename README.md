@@ -19,6 +19,19 @@ The integration follows the evidence chain from a matching graph assertion to it
 
 See the [contextd integration guide](docs/contextd-integration.md) for the runnable handoff, validation boundary and supported evidence mapping. Passing `oes check-graph` establishes structural validity; it does not establish that a claim is true or that an excerpt matches its source.
 
+Use `check-graph --with-evidence` for the combined structure and exact-source
+gate. contextd uses the checked graph both to route documents with provenance
+and to report when that supplied graph contributes no task-specific evidence.
+A missing graph route is scoped to that graph; it is not proof of absent
+knowledge throughout a project.
+
+The portable JSON contract is
+[`contracts/graph-envelope.schema.json`](contracts/graph-envelope.schema.json).
+It validates the graph envelope; the OES reference validator additionally checks
+the selected ontology and exact evidence when requested. Product-specific
+proposal review, workspace binding and owner revision checks belong to contextd
+around that shared graph, rather than to a competing ontology definition.
+
 ## Reproducible proof of work
 
 Run **`npm run demo`** for a bounded meeting → ticket → real local Git commit demonstration. It generates synthetic records, two actual Git commits, a graph and evidence-bearing answer. It calls `check-graph` and `check-evidence`, then confirms that a bare ticket mention is not linked and that a fabricated quotation is rejected.
@@ -257,6 +270,11 @@ The 12 skills are designed to be selected **by intent**, not executed in a manda
 | Maintain and consume the model | `ontology-evolve`, `ontology-query`, `ontology-publish` | Version plans, query contracts, validated exports |
 
 Each skill includes intended inputs, a procedure, deliverables, quality gates and suggested handoffs. See the [skill index](skills/README.md) and [agent operating contract](AGENTS.md).
+
+Skill depth varies: extract, link and verify include concrete worked boundaries
+and executable checks; the other nine are procedural guides that still need
+domain-specific examples and acceptance artifacts. The skill count is not a
+measure of independently validated agent capabilities.
 
 ### Three usage modes
 
