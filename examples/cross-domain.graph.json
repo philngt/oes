@@ -1,0 +1,564 @@
+{
+  "apiVersion": "oes.graph/v1",
+  "template": "cross-domain",
+  "metadata": {
+    "id": "cross-domain-reliability",
+    "ontologyVersion": "0.2.0",
+    "synthetic": true,
+    "description": "Hand-authored, source-grounded trace with separate decision-maker, assignee and identity assertions.",
+    "limitations": [
+      "Commit SHA strings are synthetic identifiers, not resolved Git objects.",
+      "Accepted is a decision lifecycle, not independent verification or task completion.",
+      "Task TASK-42 remains open; no test outcome, deployment or runtime observation is represented.",
+      "Traversal expectations test this bounded fixture; validators check structure and text integrity, not semantic truth."
+    ]
+  },
+  "nodes": [
+    {
+      "id": "source:cross-domain",
+      "type": "Source",
+      "properties": {
+        "uri": "examples/sources/cross-domain.md",
+        "kind": "synthetic-markdown",
+        "sha256": "25793618b538470022920ea3fdc2731a83f50ecdfc2ce89d8df366efadaa6034",
+        "version": "cross-domain-v1"
+      }
+    },
+    {
+      "id": "ev:contains-message",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L6",
+        "excerpt": "Conversation M1 contains Message MSG1."
+      }
+    },
+    {
+      "id": "ev:message-author",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L7",
+        "excerpt": "Message MSG1 was spoken by Actor A-AN (name: An)."
+      }
+    },
+    {
+      "id": "ev:decision-statement",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L8",
+        "excerpt": "Decision D1 states: Keep database-write failures eligible for retry in the proof of concept."
+      }
+    },
+    {
+      "id": "ev:decision-maker",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L9",
+        "excerpt": "Actor A-AN adopted Decision D1; the decision lifecycle is accepted. This records the decision maker, not task completion."
+      }
+    },
+    {
+      "id": "ev:decision-message",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L10",
+        "excerpt": "Decision D1 is stated in Message MSG1."
+      }
+    },
+    {
+      "id": "ev:decision-meeting",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L11",
+        "excerpt": "Decision D1 is recorded in Conversation M1."
+      }
+    },
+    {
+      "id": "ev:identity-an",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L12",
+        "excerpt": "Actor A-AN explicitly represents Person P-AN (name: An Tran)."
+      }
+    },
+    {
+      "id": "ev:identity-binh",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L13",
+        "excerpt": "Actor A-BINH (name: Binh) explicitly represents Person P-BINH (name: Binh Le)."
+      }
+    },
+    {
+      "id": "ev:action-meeting",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L16",
+        "excerpt": "ActionItem A1 is recorded in Conversation M1."
+      }
+    },
+    {
+      "id": "ev:action-owner",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L17",
+        "excerpt": "ActionItem A1 is assigned to Actor A-BINH; assignment does not make Binh the speaker or decision maker."
+      }
+    },
+    {
+      "id": "ev:ticket-action",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L18",
+        "excerpt": "Ticket REL-42 explicitly tracks ActionItem A1."
+      }
+    },
+    {
+      "id": "ev:action-task",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L19",
+        "excerpt": "ActionItem A1 is realized as Task TASK-42 (Prepare the database-timeout proof of concept)."
+      }
+    },
+    {
+      "id": "ev:ticket-task",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L20",
+        "excerpt": "Ticket REL-42 explicitly tracks Task TASK-42."
+      }
+    },
+    {
+      "id": "ev:task-owner",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L21",
+        "excerpt": "Task TASK-42 is assigned to Person P-BINH."
+      }
+    },
+    {
+      "id": "ev:policy-statement",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L23",
+        "excerpt": "Policy POL1 states: A failed database write must remain eligible for retry in the proof of concept."
+      }
+    },
+    {
+      "id": "ev:decision-policy",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L24",
+        "excerpt": "Decision D1 motivates Policy POL1."
+      }
+    },
+    {
+      "id": "ev:process-policy",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L25",
+        "excerpt": "Process PROC1 (Proof-of-concept review) is governed by Policy POL1."
+      }
+    },
+    {
+      "id": "ev:process-step",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L26",
+        "excerpt": "Process PROC1 has Step STEP1 (Prepare the proof of concept)."
+      }
+    },
+    {
+      "id": "ev:step-task",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L27",
+        "excerpt": "Step STEP1 creates Task TASK-42."
+      }
+    },
+    {
+      "id": "ev:commit-ticket",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L29",
+        "excerpt": "Synthetic commit record C1 explicitly declares that it implements Ticket REL-42; this declaration is unverified."
+      }
+    },
+    {
+      "id": "ev:commit-decision",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L30",
+        "excerpt": "Synthetic commit record C1 explicitly identifies Decision D1 as its recorded decision context."
+      }
+    },
+    {
+      "id": "ev:commit-service",
+      "type": "Evidence",
+      "properties": {
+        "sourceId": "source:cross-domain",
+        "locator": "L31",
+        "excerpt": "Synthetic commit record C1 explicitly declares changes to Service orders-consumer; no running deployment is asserted."
+      }
+    },
+    {
+      "id": "meeting:m1",
+      "type": "Conversation",
+      "properties": {
+        "title": "Database retry proof-of-concept review"
+      }
+    },
+    {
+      "id": "message:msg1",
+      "type": "Message",
+      "properties": {
+        "content": "Keep database-write failures eligible for retry in the proof of concept."
+      }
+    },
+    {
+      "id": "actor:an",
+      "type": "Actor",
+      "properties": {
+        "name": "An"
+      }
+    },
+    {
+      "id": "actor:binh",
+      "type": "Actor",
+      "properties": {
+        "name": "Binh"
+      }
+    },
+    {
+      "id": "person:an",
+      "type": "Person",
+      "properties": {
+        "name": "An Tran"
+      }
+    },
+    {
+      "id": "person:binh",
+      "type": "Person",
+      "properties": {
+        "name": "Binh Le"
+      }
+    },
+    {
+      "id": "person:binh-unrelated",
+      "type": "Person",
+      "properties": {
+        "name": "Binh Le"
+      }
+    },
+    {
+      "id": "decision:d1",
+      "type": "Decision",
+      "properties": {
+        "statement": "Keep database-write failures eligible for retry in the proof of concept.",
+        "status": "accepted"
+      }
+    },
+    {
+      "id": "action:a1",
+      "type": "ActionItem",
+      "properties": {
+        "summary": "Prepare the database-timeout proof of concept."
+      }
+    },
+    {
+      "id": "ticket:rel-42",
+      "type": "Ticket",
+      "properties": {
+        "key": "REL-42"
+      }
+    },
+    {
+      "id": "task:42",
+      "type": "Task",
+      "properties": {
+        "label": "Prepare the database-timeout proof of concept"
+      }
+    },
+    {
+      "id": "policy:pol1",
+      "type": "Policy",
+      "properties": {
+        "statement": "A failed database write must remain eligible for retry in the proof of concept."
+      }
+    },
+    {
+      "id": "process:proc1",
+      "type": "Process",
+      "properties": {
+        "label": "Proof-of-concept review"
+      }
+    },
+    {
+      "id": "step:step1",
+      "type": "Step",
+      "properties": {
+        "label": "Prepare the proof of concept"
+      }
+    },
+    {
+      "id": "commit:c1",
+      "type": "Commit",
+      "properties": {
+        "label": "Synthetic explicit implementation declaration",
+        "sha": "1111111111111111111111111111111111111111"
+      }
+    },
+    {
+      "id": "commit:c2",
+      "type": "Commit",
+      "properties": {
+        "label": "Synthetic bare ticket mention",
+        "sha": "2222222222222222222222222222222222222222"
+      }
+    },
+    {
+      "id": "service:orders-consumer",
+      "type": "Service",
+      "properties": {
+        "label": "orders-consumer"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:contains-message",
+      "type": "containsMessage",
+      "from": "meeting:m1",
+      "to": "message:msg1",
+      "evidenceIds": [
+        "ev:contains-message"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:message-author",
+      "type": "authoredBy",
+      "from": "message:msg1",
+      "to": "actor:an",
+      "evidenceIds": [
+        "ev:message-author"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:decision-statement",
+      "type": "supportedBy",
+      "from": "decision:d1",
+      "to": "ev:decision-statement",
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:decision-maker",
+      "type": "decidedBy",
+      "from": "decision:d1",
+      "to": "actor:an",
+      "evidenceIds": [
+        "ev:decision-maker"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:decision-message",
+      "type": "statedIn",
+      "from": "decision:d1",
+      "to": "message:msg1",
+      "evidenceIds": [
+        "ev:decision-message"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:decision-meeting",
+      "type": "recordedIn",
+      "from": "decision:d1",
+      "to": "meeting:m1",
+      "evidenceIds": [
+        "ev:decision-meeting"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:identity-an",
+      "type": "representsPerson",
+      "from": "actor:an",
+      "to": "person:an",
+      "evidenceIds": [
+        "ev:identity-an"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:identity-binh",
+      "type": "representsPerson",
+      "from": "actor:binh",
+      "to": "person:binh",
+      "evidenceIds": [
+        "ev:identity-binh"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:action-meeting",
+      "type": "recordedIn",
+      "from": "action:a1",
+      "to": "meeting:m1",
+      "evidenceIds": [
+        "ev:action-meeting"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:action-owner",
+      "type": "assignedTo",
+      "from": "action:a1",
+      "to": "actor:binh",
+      "evidenceIds": [
+        "ev:action-owner"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:ticket-action",
+      "type": "tracks",
+      "from": "ticket:rel-42",
+      "to": "action:a1",
+      "evidenceIds": [
+        "ev:ticket-action"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:action-task",
+      "type": "realizedAsTask",
+      "from": "action:a1",
+      "to": "task:42",
+      "evidenceIds": [
+        "ev:action-task"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:ticket-task",
+      "type": "tracksTask",
+      "from": "ticket:rel-42",
+      "to": "task:42",
+      "evidenceIds": [
+        "ev:ticket-task"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:task-owner",
+      "type": "assignedToPerson",
+      "from": "task:42",
+      "to": "person:binh",
+      "evidenceIds": [
+        "ev:task-owner"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:policy-statement",
+      "type": "supportedBy",
+      "from": "policy:pol1",
+      "to": "ev:policy-statement",
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:decision-policy",
+      "type": "motivatesPolicy",
+      "from": "decision:d1",
+      "to": "policy:pol1",
+      "evidenceIds": [
+        "ev:decision-policy"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:process-policy",
+      "type": "governedBy",
+      "from": "process:proc1",
+      "to": "policy:pol1",
+      "evidenceIds": [
+        "ev:process-policy"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:process-step",
+      "type": "hasStep",
+      "from": "process:proc1",
+      "to": "step:step1",
+      "evidenceIds": [
+        "ev:process-step"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:step-task",
+      "type": "createsTask",
+      "from": "step:step1",
+      "to": "task:42",
+      "evidenceIds": [
+        "ev:step-task"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:commit-ticket",
+      "type": "implementsTicket",
+      "from": "commit:c1",
+      "to": "ticket:rel-42",
+      "evidenceIds": [
+        "ev:commit-ticket"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:commit-decision",
+      "type": "decidedIn",
+      "from": "commit:c1",
+      "to": "decision:d1",
+      "evidenceIds": [
+        "ev:commit-decision"
+      ],
+      "assertionStatus": "asserted"
+    },
+    {
+      "id": "edge:commit-service",
+      "type": "changesService",
+      "from": "commit:c1",
+      "to": "service:orders-consumer",
+      "evidenceIds": [
+        "ev:commit-service"
+      ],
+      "assertionStatus": "asserted"
+    }
+  ]
+}

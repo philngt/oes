@@ -29,7 +29,7 @@ node bin/oes.mjs check-evidence examples/kafka-meeting.graph.json \
   --source-root . --require-hash --warnings-as-errors --json
 ```
 
-See [the executable demo](demo/README.md) and [exact local evidence checking](docs/evidence-checking.md). This is a deterministic proof of work with synthetic source content, **not** an actual agent run, a human-labeled evaluation benchmark, or semantic verification. No video is claimed. The 12 skills and existing domain templates remain unchanged in number.
+See [the executable demo](demo/README.md) and [exact local evidence checking](docs/evidence-checking.md). This is a deterministic proof of work with synthetic source content, **not** an actual agent run, a human-labeled evaluation benchmark, or semantic verification. No video is claimed. The 12 skills are unchanged; the unreleased [semantic foundation](docs/template-contracts.md) adds a shared identity template and a static cross-domain fixture. See [compatibility and version notes](docs/semantic-foundation-compatibility.md) before updating a custom template registry.
 
 ## 1. Vision: why this exists
 
@@ -122,31 +122,36 @@ These are engineering principles. Some have runtime support today; others are ex
 
 `core/ontology.json` defines `Entity`, `Source`, `Evidence`, `Claim`, and `Event`, together with shared relations such as `supportedBy` and `derivedFrom`.
 
-Concrete concepts belong in domain templates. For example, **Person** belongs in a people ontology, **Service** in a software ontology, and **Step** in a workflow ontology. This prevents the shared core from becoming an unmaintainable universal business schema.
+Concrete concepts belong in domain templates. **Actor** and **Person** have one shared definition in `agents`; **Service** belongs in a software ontology and **Step** in a workflow ontology. Knowledge, workflow and people templates reuse the identity definitions, so composing them does not create competing `Person` definitions. Actor and Person retain separate identities; an explicit `representsPerson` assertion is a contextual mapping, not an automatic merge.
 
 ## 5. Create different ontologies from different kinds of knowledge
 
 | Template | Appropriate sources | Questions it should help model |
 | --- | --- | --- |
+| [`agents`](templates/agents/ontology.json) | Explicit identity mappings in authorized source records | Which source-facing actor is explicitly linked to which person? |
 | [`knowledge-evidence`](templates/knowledge-evidence/ontology.json) | Chat, meeting notes, tickets, documents | Who said what? Which decision was recorded? What supports this claim? |
 | [`software-system`](templates/software-system/ontology.json) | Repositories, APIs, configs, event schemas, deployments | Which service publishes an event? Which commit changes a config? |
 | [`workflow-process`](templates/workflow-process/ontology.json) | SOPs, approvals, task histories, team interactions | Who owns a task? Which step follows another? Which policy governs it? |
 | [`people-relationship`](templates/people-relationship/ontology.json) | Authorized contact records, groups, life events | Who belongs to which group, in what role? What is the direction of a relationship? |
 | [`cross-domain`](templates/cross-domain/ontology.json) | A combination of the above | How does a decision connect to a ticket, commit, service or process step? |
 
-The first four are **bounded domain templates**; `cross-domain` is a **composition** of knowledge, software, and workflow schemas with bridge relations.
+`agents` is a small shared identity template. Knowledge, software, workflow and people are **four bounded domain templates**; `cross-domain` is a **composition** of knowledge, software, and workflow schemas with bridge relations. Together these are six templates, plus `core`.
+
+Every relation definition includes its intended meaning. [Template contracts](docs/template-contracts.md) record competency questions, positive and negative examples, and the distinction between a declaration, a recorded decision and a verified outcome. These are bounded contract tests, not a general graph query or entailment engine.
 
 These are **examples, not a closed catalog**. The same approach can support finance, scientific research, incidents, product design, asset lineage, healthcare, manufacturing or a domain not yet imagined.
 
 ### Domain A: fragmented conversations and decisions
 
-A meeting may include statements, proposals, decisions, action items, and unresolved questions. The ontology must distinguish them; mentioning Kafka in a transcript does not mean the team decided to adopt it.
+A meeting may include statements, proposals, decisions, action items, and unresolved questions. The current template models claims, decisions and follow-up records; a proposed Claim must not silently become an accepted Decision. Open questions have no dedicated type yet and should remain in the source or a reviewed domain extension. Mentioning Kafka in a transcript does not mean the team decided to adopt it.
 
 A source-grounded graph might include:
 
 ~~~text
 Conversation --containsMessage--> Message
+Claim        --statedIn---------> Message --authoredBy--> Actor
 Decision     --recordedIn-------> Conversation
+Decision     --decidedBy--------> Actor
 Decision     --supportedBy------> Evidence --(sourceId)--> Source
 ActionItem   --assignedTo-------> Actor
 ~~~
@@ -174,7 +179,7 @@ Step    --createsTask------> Task --assignedToPerson--> Person
 Step    --performedByRole---> Role
 ~~~
 
-A policy saying *a manager may approve* is different from evidence that *a manager did approve*. See [workflow example](examples/approval-workflow.graph.json).
+A policy saying *a manager may approve* is different from evidence that *a manager did approve*. The workflow fixture models definitions and assignments, not a general execution history. See [workflow example](examples/approval-workflow.graph.json); explicit decision-maker attribution is illustrated in the [cross-domain fixture](examples/cross-domain.graph.json). General Process/Step execution records remain future work.
 
 ### Domain D: people and relationships
 
@@ -205,16 +210,17 @@ Imagine a change to Kafka configuration. Knowledge about it may be scattered acr
                          Commit C1 --fulfillsStep--> Step R1
 ~~~
 
-This diagram is a **conceptual integration scenario**, not a claim that the sample files already contain this complete connected dataset.
+This diagram is a **conceptual integration scenario**. The [static cross-domain graph](examples/cross-domain.graph.json) and its [synthetic source](examples/sources/cross-domain.md) cover an explicit decision, action, ticket, task, commit, service and policy trace. The fixture does not claim a real deployment, a completed task or behavioral verification. The executable Git demo remains a separate proof of work.
 
 Cross-domain links must be **explicit and supported**. A matching title, similar embedding, or common timestamp is not enough to establish that a commit implements a ticket or fulfills a decision.
 
-### How composition works in v0.2.0
+### How composition works
 
 - A template can `extends` one or more templates; shared `core` definitions are reused.
 - Identically named types/relations must have equivalent definitions; incompatible definitions cause compilation to fail.
 - Domain homonyms should be renamed or reviewed (e.g., conversation `Topic` versus Kafka `BrokerTopic`).
 - Bridge relations such as `implementsTicket`, `decidedIn`, and `fulfillsStep` belong in an explicit composition template.
+- Additive bridges `realizedAsTask`, `tracksTask` and `motivatesPolicy` connect work records and policy rationale without equating their identities or implying completion. `decidedIn` keeps its existing name and direction: it records decision context, not independent proof that a decision was fulfilled.
 - Full semantic alignment, mapping execution, identity-resolution algorithms and automatic cross-domain discovery are **not yet implemented**.
 
 Composition is not just joining tables. It is aligning meaning *without erasing domain boundaries*.
@@ -349,7 +355,7 @@ skills/               12 agent-facing SKILL.md instructions
 adapters/             Two narrow executable adapters + source-specific playbooks
 lib/                  Reference validation/serialization functions
 bin/                  CLI for checks and exports
-examples/             Four synthetic source-grounded graph fixtures
+examples/             Five synthetic source-grounded graph fixtures
 tests/                Regression tests
 docs/                 Architecture, authoring, evidence policy and roadmap
 .github/workflows/    CI checks
@@ -357,10 +363,10 @@ docs/                 Architecture, authoring, evidence policy and roadmap
 
 ## 11. What exists, and what is still a goal?
 
-| Capability | v0.2.0 status |
+| Capability | Current checkout status |
 | --- | --- |
 | Reusable engineering skill documents | **Implemented** (12 skills) |
-| Core and domain ontology templates | **Implemented** (four domain templates + cross-domain composition) |
+| Core and domain ontology templates | **Implemented** (shared agents + four domain templates + cross-domain composition; see unreleased template notes) |
 | Template inheritance and collision rejection | **Implemented** |
 | Structural graph validation: types, endpoints, properties, cardinality | **Implemented** |
 | Evidence reference checks, assertion status, basic date checks | **Implemented** |

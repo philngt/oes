@@ -1,0 +1,47 @@
+{
+  "apiVersion": "oes/v1",
+  "kind": "OntologyTemplate",
+  "metadata": {
+    "id": "agents",
+    "version": "0.1.0",
+    "description": "Shared source-facing actors and individual people, connected by explicit evidence-backed identity mappings"
+  },
+  "extends": [
+    "core"
+  ],
+  "entityTypes": {
+    "Actor": {
+      "description": "Source-facing participant or task owner that may represent a human, organization or software actor; identity with another entity is not implied.",
+      "parent": "Entity",
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Person": {
+      "description": "Individual human, modeled separately from a source-facing Actor; matching names do not establish identity.",
+      "parent": "Entity",
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  },
+  "relationTypes": {
+    "representsPerson": {
+      "from": [
+        "Actor"
+      ],
+      "to": [
+        "Person"
+      ],
+      "cardinality": "many-to-one",
+      "description": "Explicitly maps a source-facing actor to the individual human it represents in the cited source context; it is not equality and does not merge entities or infer a mapping from matching names."
+    }
+  },
+  "constraints": []
+}
