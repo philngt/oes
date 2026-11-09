@@ -3,7 +3,7 @@
   "kind": "OntologyTemplate",
   "metadata": {
     "id": "cross-domain",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Composable traceability from decisions to tickets, commits, services and workflow steps"
   },
   "extends": [
@@ -20,7 +20,8 @@
       "to": [
         "Ticket"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Claims that a commit implements work described by a ticket; a bare ticket mention is insufficient and the link does not establish full ticket completion."
     },
     "decidedIn": {
       "from": [
@@ -29,7 +30,8 @@
       "to": [
         "Decision"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Links a commit to the recorded decision context or rationale for its change; it does not prove that the commit fulfilled the decision."
     },
     "changesService": {
       "from": [
@@ -38,7 +40,8 @@
       "to": [
         "Service"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a service changed by a commit, supported by source or configuration changes; the link does not establish deployment or runtime effects."
     },
     "fulfillsStep": {
       "from": [
@@ -47,7 +50,8 @@
       "to": [
         "Step"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Claims that a commit satisfies the recorded requirements of a workflow step; direct fulfillment evidence is needed and other steps or runtime outcomes are not implied."
     },
     "motivatesRule": {
       "from": [
@@ -56,7 +60,38 @@
       "to": [
         "BusinessRule"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a business rule motivated by a decision; rationale alone does not establish implementation or enforcement of the rule."
+    },
+    "realizedAsTask": {
+      "from": [
+        "ActionItem"
+      ],
+      "to": [
+        "Task"
+      ],
+      "cardinality": "many-to-many",
+      "description": "Connects a follow-up action item to one or more execution tasks that realize or decompose its work; the records remain distinct and the link does not imply task completion."
+    },
+    "tracksTask": {
+      "from": [
+        "Ticket"
+      ],
+      "to": [
+        "Task"
+      ],
+      "cardinality": "many-to-many",
+      "description": "Identifies an execution task tracked by a ticket; tracking is not identity, assignment or proof of task completion."
+    },
+    "motivatesPolicy": {
+      "from": [
+        "Decision"
+      ],
+      "to": [
+        "Policy"
+      ],
+      "cardinality": "many-to-many",
+      "description": "Identifies a governing policy motivated by a decision; the rationale does not establish adoption, enforcement or compliance."
     }
   },
   "constraints": []

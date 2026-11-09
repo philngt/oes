@@ -3,7 +3,7 @@
   "kind": "OntologyTemplate",
   "metadata": {
     "id": "core",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Portable identity, evidence, assertion, and temporal primitives"
   },
   "extends": [],
@@ -26,6 +26,18 @@
         },
         "kind": {
           "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "description": "SHA-256 hex digest of the full raw source bytes. check-evidence validates the digest for supported local sources when supplied; structural validation only checks its string type."
+        },
+        "version": {
+          "type": "string",
+          "description": "Provider revision or version identifying the source, such as a commit SHA or ticket revision; structural validation only checks its string type."
+        },
+        "retrievedAt": {
+          "type": "string",
+          "description": "Source retrieval time, conventionally an ISO 8601 timestamp; structural validation only checks its string type and does not enforce a date format."
         }
       }
     },
@@ -70,7 +82,8 @@
       "parent": "Entity",
       "properties": {
         "occurredAt": {
-          "type": "string"
+          "type": "string",
+          "description": "Recorded occurrence time, represented as a date or timestamp string; the current validator checks only the string type and does not enforce a date format."
         }
       }
     }
@@ -83,7 +96,8 @@
       "to": [
         "Evidence"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Cites evidence offered in support of a claim; the citation does not independently confirm that the claim is true."
     },
     "contradicts": {
       "from": [
@@ -93,7 +107,8 @@
         "Claim"
       ],
       "cardinality": "many-to-many",
-      "symmetric": true
+      "symmetric": true,
+      "description": "Records an explicit incompatibility between two claims. Symmetry is declared, but no reciprocal edge or truth judgment is inferred."
     },
     "supersedes": {
       "from": [
@@ -102,7 +117,8 @@
       "to": [
         "Claim"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a claim that replaces the standing of the target claim in the recorded context; both claims and their evidence remain distinct."
     },
     "documentedIn": {
       "from": [
@@ -111,7 +127,8 @@
       "to": [
         "Source"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a source that records or describes the subject entity; the link does not validate every statement in that source."
     },
     "derivedFrom": {
       "from": [
@@ -120,7 +137,8 @@
       "to": [
         "*"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Records a derivation from the target entity into the subject entity, preserving provenance without equating their identities or verifying the result."
     }
   },
   "constraints": []

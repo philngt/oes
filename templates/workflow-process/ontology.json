@@ -3,11 +3,11 @@
   "kind": "OntologyTemplate",
   "metadata": {
     "id": "workflow-process",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Process and human interaction modeling, tasks, roles, and handoffs"
   },
   "extends": [
-    "core"
+    "agents"
   ],
   "entityTypes": {
     "Process": {
@@ -29,16 +29,6 @@
       "description": "Responsibility role",
       "parent": "Entity",
       "properties": {}
-    },
-    "Person": {
-      "description": "Individual participant",
-      "parent": "Entity",
-      "properties": {
-        "name": {
-          "type": "string",
-          "required": true
-        }
-      }
     },
     "Team": {
       "description": "Group with organizational responsibilities",
@@ -74,7 +64,8 @@
       "to": [
         "Step"
       ],
-      "cardinality": "one-to-many"
+      "cardinality": "one-to-many",
+      "description": "Identifies a step defined within a process; process structure does not establish that any execution of the step occurred."
     },
     "precedes": {
       "from": [
@@ -83,7 +74,8 @@
       "to": [
         "Step"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Defines the intended order from one process step to another; it does not establish observed execution order, and the validator does not enforce acyclicity."
     },
     "createsTask": {
       "from": [
@@ -92,7 +84,8 @@
       "to": [
         "Task"
       ],
-      "cardinality": "one-to-many"
+      "cardinality": "one-to-many",
+      "description": "Identifies a task created from a process step; the link records work provenance rather than task execution or completion."
     },
     "performedByRole": {
       "from": [
@@ -101,7 +94,8 @@
       "to": [
         "Role"
       ],
-      "cardinality": "many-to-one"
+      "cardinality": "many-to-one",
+      "description": "Assigns the role responsible for performing a process step; this responsibility declaration does not identify an actual performer or execution."
     },
     "assignedToPerson": {
       "from": [
@@ -110,7 +104,8 @@
       "to": [
         "Person"
       ],
-      "cardinality": "many-to-one"
+      "cardinality": "many-to-one",
+      "description": "Identifies the individual assigned a task; assignment does not establish acceptance, execution or completion."
     },
     "governedBy": {
       "from": [
@@ -120,7 +115,8 @@
       "to": [
         "Policy"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a policy intended to govern a process or step; the declaration does not establish actual enforcement or compliance."
     },
     "handsOffTo": {
       "from": [
@@ -129,7 +125,8 @@
       "to": [
         "Step"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Defines a handoff of work or responsibility from one step to another; an actual transfer requires separate observation evidence."
     },
     "participatesIn": {
       "from": [
@@ -138,7 +135,8 @@
       "to": [
         "Interaction"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a person observed participating in an interaction; participation alone does not establish responsibility or decision authority."
     },
     "memberOfTeam": {
       "from": [
@@ -147,7 +145,8 @@
       "to": [
         "Team"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Records a person's membership in a team in the cited context; membership alone does not assign a role or task."
     },
     "followsStep": {
       "from": [
@@ -156,7 +155,8 @@
       "to": [
         "Step"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Associates an observed interaction with the process step it follows; observation evidence is required and the link does not certify overall process compliance."
     }
   },
   "constraints": [

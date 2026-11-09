@@ -3,23 +3,13 @@
   "kind": "OntologyTemplate",
   "metadata": {
     "id": "people-relationship",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Typed personal relationships, inverse semantics, group membership and life events inspired by Monica"
   },
   "extends": [
-    "core"
+    "agents"
   ],
   "entityTypes": {
-    "Person": {
-      "description": "Contact or real-world person",
-      "parent": "Entity",
-      "properties": {
-        "name": {
-          "type": "string",
-          "required": true
-        }
-      }
-    },
     "Group": {
       "description": "Relationship context, such as a family or team",
       "parent": "Entity",
@@ -58,7 +48,8 @@
         "Person"
       ],
       "cardinality": "many-to-many",
-      "inverse": "childOf"
+      "inverse": "childOf",
+      "description": "Identifies the subject person as a parent of the target person in the recorded context; the inverse declaration does not create a childOf edge."
     },
     "childOf": {
       "from": [
@@ -68,7 +59,8 @@
         "Person"
       ],
       "cardinality": "many-to-many",
-      "inverse": "parentOf"
+      "inverse": "parentOf",
+      "description": "Identifies the subject person as a child of the target person in the recorded context; the inverse declaration does not create a parentOf edge."
     },
     "friendOf": {
       "from": [
@@ -78,7 +70,8 @@
         "Person"
       ],
       "cardinality": "many-to-many",
-      "symmetric": true
+      "symmetric": true,
+      "description": "Records a friendship between people. Symmetry is declared, but neither a reciprocal friendOf edge nor a knows edge is automatically inferred."
     },
     "knows": {
       "from": [
@@ -87,7 +80,8 @@
       "to": [
         "Person"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Records a directed acquaintance relationship from one person to another; reciprocal acquaintance or friendship requires its own evidence."
     },
     "memberOf": {
       "from": [
@@ -102,7 +96,8 @@
           "type": "string",
           "required": true
         }
-      }
+      },
+      "description": "Records a person's membership in a group with the required role in that group context; the role is not a global property of the person."
     },
     "partOfOrganization": {
       "from": [
@@ -111,7 +106,8 @@
       "to": [
         "Organization"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies an organization to which a group belongs; the link does not automatically assign the group's members to that organization."
     },
     "worksAt": {
       "from": [
@@ -120,7 +116,8 @@
       "to": [
         "Organization"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Records a person's work affiliation with an organization in the cited context; a particular job role or team membership requires separate evidence."
     },
     "participatedInLifeEvent": {
       "from": [
@@ -129,7 +126,8 @@
       "to": [
         "LifeEvent"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a person who participated in a life event; participation does not imply a particular role or a relationship with every other participant."
     }
   },
   "constraints": []

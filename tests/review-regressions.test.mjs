@@ -77,7 +77,8 @@ test('missing files and duplicate node IDs give diagnostics',t=>{
 });
 test('composition ignores object key order including nested rules',()=>{
   const r=structuredClone(registry),definition=r.core.entityTypes.Source;
-  r.reordered={apiVersion:'oes/v1',kind:'OntologyTemplate',metadata:{id:'reordered'},extends:['core'],entityTypes:{Source:{properties:{kind:{type:'string'},uri:{required:true,type:'string'}},parent:definition.parent,description:definition.description}},relationTypes:{}};
+  const reverseKeys=value=>Array.isArray(value)?value.map(reverseKeys):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).reverse().map(([key,item])=>[key,reverseKeys(item)])):value;
+  r.reordered={apiVersion:'oes/v1',kind:'OntologyTemplate',metadata:{id:'reordered'},extends:['core'],entityTypes:{Source:reverseKeys(definition)},relationTypes:{}};
   assert.doesNotThrow(()=>compileTemplate('reordered',r));
 });
 test('canonical comparison does not reorder arrays or erase semantic changes',()=>{
@@ -114,7 +115,9 @@ test('invalid hierarchy returns diagnostics without crashing graph validation',(
 function cli(...args){return spawnSync(process.execPath,[join(ROOT,'bin/oes.mjs'),...args],{cwd:ROOT,encoding:'utf8'});}
 test('check-all runs both structural and textual verification with JSON output',()=>{
   const r=cli('check-all','--warnings-as-errors','--require-hash','--json');assert.equal(r.status,0,r.stdout+r.stderr);
-  const report=JSON.parse(r.stdout);assert.equal(report.passed,true);assert.equal(report.evidence.checked,16);assert.equal(report.evidence.skipped,0);
+  const expectedEvidence=readdirSync(join(ROOT,'examples')).filter(file=>file.endsWith('.graph.json')).reduce((total,file)=>total+read(`examples/${file}`).nodes.filter(node=>node.type==='Evidence').length,0);
+  assert.ok(expectedEvidence>=16,'the original evidence fixtures remain covered');
+  const report=JSON.parse(r.stdout);assert.equal(report.passed,true);assert.equal(report.evidence.checked,expectedEvidence);assert.equal(report.evidence.skipped,0);
 });
 test('check-evidence CLI fails on tampered excerpt',t=>{
   const {root}=fixture(t),g=read('examples/kafka-meeting.graph.json');g.nodes.find(n=>n.id==='ev-decision').properties.excerpt='Drop Kafka';

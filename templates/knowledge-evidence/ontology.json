@@ -3,11 +3,11 @@
   "kind": "OntologyTemplate",
   "metadata": {
     "id": "knowledge-evidence",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Evidence-first extraction from conversations, tickets and meetings"
   },
   "extends": [
-    "core"
+    "agents"
   ],
   "entityTypes": {
     "Conversation": {
@@ -25,16 +25,6 @@
       "parent": "Event",
       "properties": {
         "content": {
-          "type": "string",
-          "required": true
-        }
-      }
-    },
-    "Actor": {
-      "description": "Speaker or task owner",
-      "parent": "Entity",
-      "properties": {
-        "name": {
           "type": "string",
           "required": true
         }
@@ -86,7 +76,8 @@
       "to": [
         "Message"
       ],
-      "cardinality": "one-to-many"
+      "cardinality": "one-to-many",
+      "description": "Identifies a message occurrence contained in the conversation or meeting record; each message occurrence belongs to at most one conversation."
     },
     "authoredBy": {
       "from": [
@@ -95,7 +86,8 @@
       "to": [
         "Actor"
       ],
-      "cardinality": "many-to-one"
+      "cardinality": "many-to-one",
+      "description": "Attributes a message to its recorded author or speaker. Authorship does not imply decision authority or agreement with quoted content."
     },
     "discusses": {
       "from": [
@@ -104,7 +96,8 @@
       "to": [
         "Topic"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a topic discussed in a conversation; discussion alone does not establish a proposal, decision or action."
     },
     "recordedIn": {
       "from": [
@@ -114,7 +107,8 @@
       "to": [
         "Conversation"
       ],
-      "cardinality": "many-to-one"
+      "cardinality": "many-to-one",
+      "description": "Identifies the conversation in which a decision or action item was recorded; recording does not establish acceptance or completion."
     },
     "assignedTo": {
       "from": [
@@ -123,7 +117,8 @@
       "to": [
         "Actor"
       ],
-      "cardinality": "many-to-one"
+      "cardinality": "many-to-one",
+      "description": "Identifies the actor assigned responsibility for an action item; assignment does not establish acceptance, execution or completion."
     },
     "tracks": {
       "from": [
@@ -132,7 +127,28 @@
       "to": [
         "ActionItem"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies an action item tracked by a ticket; the records remain distinct and the link does not imply completion."
+    },
+    "statedIn": {
+      "from": [
+        "Claim"
+      ],
+      "to": [
+        "Message"
+      ],
+      "cardinality": "many-to-many",
+      "description": "Identifies a message in which a claim is stated or quoted; attribution records what was said, not the truth of the claim or the speaker's endorsement."
+    },
+    "decidedBy": {
+      "from": [
+        "Decision"
+      ],
+      "to": [
+        "Actor"
+      ],
+      "cardinality": "many-to-many",
+      "description": "Identifies an actor explicitly recorded as making or adopting the decision; merely proposing, speaking, recording it or receiving an assignment does not establish decision authority."
     }
   },
   "constraints": [

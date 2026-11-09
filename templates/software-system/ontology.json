@@ -3,7 +3,7 @@
   "kind": "OntologyTemplate",
   "metadata": {
     "id": "software-system",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Source-grounded software systems, services, events, APIs and deployment architecture"
   },
   "extends": [
@@ -115,7 +115,8 @@
       "to": [
         "Module"
       ],
-      "cardinality": "one-to-many"
+      "cardinality": "one-to-many",
+      "description": "Identifies a build or source module contained in a repository; each modeled module belongs to at most one repository."
     },
     "definesService": {
       "from": [
@@ -124,7 +125,8 @@
       "to": [
         "Service"
       ],
-      "cardinality": "one-to-many"
+      "cardinality": "one-to-many",
+      "description": "Identifies the service defined by a source or build module; this structural declaration does not establish a running deployment."
     },
     "containsClass": {
       "from": [
@@ -133,7 +135,8 @@
       "to": [
         "Class"
       ],
-      "cardinality": "one-to-many"
+      "cardinality": "one-to-many",
+      "description": "Identifies a class or named type declaration contained in a module; each modeled declaration belongs to at most one module."
     },
     "definesMethod": {
       "from": [
@@ -142,7 +145,8 @@
       "to": [
         "Method"
       ],
-      "cardinality": "one-to-many"
+      "cardinality": "one-to-many",
+      "description": "Identifies a method or function declared by a class; this declaration does not establish that the method was executed."
     },
     "exposesApi": {
       "from": [
@@ -151,7 +155,8 @@
       "to": [
         "ApiEndpoint"
       ],
-      "cardinality": "one-to-many"
+      "cardinality": "one-to-many",
+      "description": "Identifies an API endpoint exposed by a service contract or implementation; availability at runtime requires separate observation evidence."
     },
     "callsService": {
       "from": [
@@ -160,7 +165,8 @@
       "to": [
         "Service"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Records a service-to-service call dependency supported by the cited source; static code or configuration does not establish that a call occurred at runtime."
     },
     "publishes": {
       "from": [
@@ -169,7 +175,8 @@
       "to": [
         "EventType"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies an event type a service is declared or observed to publish; the cited evidence must distinguish declaration from actual emission."
     },
     "carriedBy": {
       "from": [
@@ -178,7 +185,8 @@
       "to": [
         "BrokerTopic"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a broker topic used to carry an event type; a routing declaration does not establish delivery of a particular event instance."
     },
     "consumes": {
       "from": [
@@ -187,7 +195,8 @@
       "to": [
         "EventType"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies an event type a service is declared or observed to consume; the cited evidence must distinguish subscription or code from actual processing."
     },
     "writesTable": {
       "from": [
@@ -196,7 +205,8 @@
       "to": [
         "Table"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Records a declared or observed write dependency from a service to a table or collection; actual writes require observation evidence."
     },
     "implementsRule": {
       "from": [
@@ -205,7 +215,8 @@
       "to": [
         "BusinessRule"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Claims that a service implements the target business rule; the relationship requires supporting evidence and does not itself verify correctness."
     },
     "changesConfig": {
       "from": [
@@ -214,7 +225,8 @@
       "to": [
         "ConfigKey"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a configuration entry changed by a commit, supported by revision or diff evidence; the change need not be deployed."
     },
     "configures": {
       "from": [
@@ -223,7 +235,8 @@
       "to": [
         "Service"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Associates a configuration entry with a service whose behavior it configures; the entry alone does not establish the effective runtime value."
     },
     "deploys": {
       "from": [
@@ -232,7 +245,8 @@
       "to": [
         "Service"
       ],
-      "cardinality": "many-to-many"
+      "cardinality": "many-to-many",
+      "description": "Identifies a service targeted by a deployment record; deployment intent or configuration alone does not prove that the service version ran successfully."
     }
   },
   "constraints": []
